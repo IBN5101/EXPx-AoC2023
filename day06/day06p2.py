@@ -2,6 +2,7 @@ from day06p1 import get_input, simulate_race
 
 races = []
 
+
 def update_input():
     new_time = ""
     new_distance = ""

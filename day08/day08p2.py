@@ -57,7 +57,8 @@ def solve3():
     last_found = 0
     for i in range(100000):
         if test_node in end_nodes:
-            print(test_node, steps % len(instruction_set), steps, steps - last_found)
+            print(test_node, steps % len(instruction_set),
+                  steps, steps - last_found)
             last_found = steps
 
         next_nodes_list = node_map[test_node]
@@ -80,4 +81,5 @@ if __name__ == "__main__":
     print(11567 * 19637 * 15871 * 21251 * 12643 * 19099)
     print(13133452426987)  # Thanks, Wolfram Alpha
 
-    # Final notes: Checking the subreddit, this problem was specifically designed to be used with LCM
+    # Final notes: Checking the subreddit,
+    # this problem was specifically designed to be used with LCM
