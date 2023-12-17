@@ -83,7 +83,8 @@ class Pointer:
         choices = [x for x in choices if self.valid_pos(x)]
         return choices
 
-    def valid_pos(self, pos):
+    @staticmethod
+    def valid_pos(pos):
         row, col = pos
         if not (0 <= row < len(Pointer.MAZE_MAP)):
             return False
@@ -91,17 +92,20 @@ class Pointer:
             return False
         return True
 
-    def add_pos(self, pos1, pos2):
+    @staticmethod
+    def add_pos(pos1, pos2):
         return tuple(map(sum, zip(pos1, pos2)))
 
-    def check_heat_loss(self, pos):
+    @staticmethod
+    def check_heat_loss(pos):
         return Pointer.MAZE_MAP[pos[0]][pos[1]]
 
-    def heuristic(self, pos):
+    @staticmethod
+    def heuristic(pos):
         row, col = pos
         end_row, end_col = Pointer.MAZE_END
         h = (end_row - row) + (end_col - col)
-        return 0
+        return h * 0
 
 
 def solve_greedy(maze_map):
@@ -118,9 +122,13 @@ def solve_greedy(maze_map):
 
     while True:
         pointer = open_list.pop()
-        # if pointer.pos in closed_list:
-        #     continue
-        closed_list.add(pointer.pos)
+
+        # Credit to HyperNeutrino:
+        # - Link: https://youtu.be/2pDSooPLLkI
+        check = (pointer.pos, pointer.direction, len(pointer.straight_line_check))
+        if check in closed_list:
+            continue
+        closed_list.add(check)
 
         if pointer.pos == Pointer.MAZE_END:
             result = pointer.g_value
@@ -147,7 +155,7 @@ def solve_greedy(maze_map):
         if steps % 1000 == 0:
             print(pointer.pos, pointer.g_value, pointer.h_value, len(open_list))
 
-    print_map_annotated(maze_map, list(closed_list))
+    # print_map_annotated(maze_map, list(closed_list))
     return result
 
 
@@ -165,5 +173,5 @@ def print_map_annotated(maze_map: list, pos_list: list, pos1: tuple = None):
 
 
 if __name__ == "__main__":
-    m_map = get_input("day17_test.txt")
+    m_map = get_input("day17.txt")
     print(solve_greedy(m_map))
