@@ -108,7 +108,7 @@ class Pointer:
         return h * 0
 
 
-def solve_greedy(maze_map):
+def solve_dijkstra(maze_map):
     result = 999
     Pointer.MAZE_MAP = maze_map
     Pointer.MAZE_END = (len(maze_map) - 1, len(maze_map[0]) - 1)
@@ -174,4 +174,4 @@ def print_map_annotated(maze_map: list, pos_list: list, pos1: tuple = None):
 
 if __name__ == "__main__":
     m_map = get_input("day17.txt")
-    print(solve_greedy(m_map))
+    print(solve_dijkstra(m_map))
